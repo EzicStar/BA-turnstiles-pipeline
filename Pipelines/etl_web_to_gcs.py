@@ -39,8 +39,11 @@ def format_date(df: pd.DataFrame) -> pd.DataFrame:
     """Fix datetime type issues"""
 
     # Create new columns with date and time joined, and make it datetime type
-    df['StartDateTime'] = pd.to_datetime(df['Date'] + df['StartTime'], format='%Y-%m-%d%H:%M:%S')
-    df['EndDateTime'] = pd.to_datetime(df['Date'] + df['EndTime'], format='%Y-%m-%d%H:%M:%S')
+    df['StartDateTime'] = pd.to_datetime(df['Date'] + df['StartTime'],
+    format='%Y-%m-%d%H:%M:%S')
+    df['EndDateTime'] = pd.to_datetime(df['Date'] + df['EndTime'],
+    format='%Y-%m-%d%H:%M:%S')
+    
     df = df.drop(columns=['Date', 'StartTime', 'EndTime'])
 
     return df
@@ -58,15 +61,15 @@ def write_local(df : pd.DataFrame, dataset_file : str) -> Path:
 def write_gcs(path: Path) -> None:
     """Upload local parquet file to GCS"""
     # Remember to create your own gcs bucket prefect block
-    # TODO: Change load argument to your-gcs-block-name
-    gcs_block = GcsBucket.load("ba-turnstiles-bucket")
+    gcs_block = GcsBucket.load("your-gcs-block-name")
     gcs_block.upload_from_path(from_path=f"{path}")
 
 
 @flow()
 def turnstiles_web_to_gcs(year: int) -> None:
-    dataset_file = f"molinetes-{year}"
-    dataset_url = f"https://cdn.buenosaires.gob.ar/datosabiertos/datasets/sbase/subte-viajes-molinetes/molinetes-{year}.zip"
+    dataset_file = f'molinetes-{year}'
+    dataset_url = 'https://cdn.buenosaires.gob.ar/datosabiertos/datasets' \
+    f'/sbase/subte-viajes-molinetes/molinetes-{year}.zip'
     
     df = fetch(dataset_url)
     df = clean(df)
