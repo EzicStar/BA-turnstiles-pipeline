@@ -1,0 +1,38 @@
+version: 2
+
+sources:
+  - name: staging
+    database: dte-de-course-375215
+    schema: turnstiles_data
+  
+    tables:
+      - name: turnstiles_part_clust
+
+models:
+  - name: turnstiles_data
+    description: >
+      Records taken from Buenos Aires Subway Turnstiles that includes
+      the amount of passengers that passed through them in a 15 minutes
+      range. The records were provided by Buenos Aires Goverment and
+      Subterraneos Buenos Aires.
+    columns:
+      - name: Line
+        description: Subway Line Letter.
+      - name: TurnstileID
+        description: ID that contains line, station and place of the turnstile.
+        tests:
+            - not_null:
+                severity: warn    
+      - name: Station
+        description: Station name.
+      - name: PaxAmount
+        description: >
+          The amount of passengers that passed through the turnstile in the
+          specified time lapse.
+      - name: StartDateTime
+        description: The time when the record began counting the pasenger amount.
+      - name: StartDateTime
+        description: The time when the record finished counting the pasenger amount.
+      - name: IsHoliday
+        description: >
+          Flag that is 1 when the date of the record is a public Holiday in Argentina

@@ -1,0 +1,9 @@
+version: 2
+
+seeds: 
+  - name: public_holidays_2018
+    description: >
+      National Holidays in Argentina in 2018
+  - name: public_holidays_2019
+    description: >
+      National Holidays in Argentina in 2019
