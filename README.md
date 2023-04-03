@@ -24,3 +24,9 @@ Data from 2018 and 2019 were used for this project because datasets from the fol
 -   Data Warehouse: BigQuery
 -   Batch processing: dbt
 - Data Visualization: Google Looker Studio
+
+## Results
+
+Here is a dashboard made in Google Looker Studio based on the data model transformed with dbt. You can look it in more detail [here](https://lookerstudio.google.com/reporting/a5163aa8-0e1f-4efb-b330-14ef7f996cc1).
+
+![Dashboard](https://github.com/EzicStar/BA-turnstiles-pipeline/blob/main/Images/Dashboard.jpg)
