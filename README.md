@@ -30,3 +30,12 @@ Data from 2018 and 2019 were used for this project because datasets from the fol
 Here is a dashboard made in Google Looker Studio based on the data model transformed with dbt. You can look it in more detail [here](https://lookerstudio.google.com/reporting/a5163aa8-0e1f-4efb-b330-14ef7f996cc1).
 
 ![Dashboard](https://github.com/EzicStar/BA-turnstiles-pipeline/blob/main/Images/Dashboard.jpg)
+
+## Run the Walkthrough Tutorial
+### 1. Clone this repo in your PC or a VM
+ You can find a detailed tutorial for Google Cloud VM setup [here](https://www.youtube.com/watch?v=ae-CV2KfoN0&list=PL3MmuxUbc_hJed7dXYoJw8DoCuVHhGEQb&index=13)
+### 2. Setup Base Environment
+- [Setup for Terraform and GCP](https://github.com/DataTalksClub/data-engineering-zoomcamp/tree/main/week_1_basics_n_setup/1_terraform_gcp)
+- Install [Python 3.8 or a later version](https://www.python.org/downloads/)
+- A virtual environment is recommended for the setup. You can create it with [conda](https://docs.conda.io/en/latest/) for example
+- Install Prefect and the dependencies needed for the data pipeline running `pip install -r ./setup/conda_requirements.txt`. Don´t forget to be in the repo directory in the console before running the command.
