@@ -1,5 +1,5 @@
 locals {
-  data_lake_bucket = "ba-turnstiles"
+  data_lake_bucket = "data_lake"
 }
 
 variable "project" {
@@ -19,11 +19,8 @@ variable "storage_class" {
 
 variable "BQ_DATASET" {
   description = "BigQuery Dataset that raw data (from GCS) will be written to"
-  type = string
-  default = "turnstiles_data"
-}
-
-variable "credentials" {
-  description = "Credentials file location in your computer"
-  type = string
+  # type = string
+  # default = "mpls_311_staging"
+  type = list
+  default = ["mpls_311_staging", "mpls_311_development", "mpls_311_production"]
 }
