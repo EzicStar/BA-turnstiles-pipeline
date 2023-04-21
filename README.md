@@ -32,10 +32,38 @@ Here is a dashboard made in Google Looker Studio based on the data model transfo
 ![Dashboard](https://github.com/EzicStar/BA-turnstiles-pipeline/blob/main/Images/Dashboard.jpg)
 
 ## Run the Walkthrough Tutorial
-### 1. Clone this repo in your PC or a VM
- You can find a detailed tutorial for Google Cloud VM setup [here](https://www.youtube.com/watch?v=ae-CV2KfoN0&list=PL3MmuxUbc_hJed7dXYoJw8DoCuVHhGEQb&index=13)
-### 2. Setup Base Environment
-- [Setup for Terraform and GCP](https://github.com/DataTalksClub/data-engineering-zoomcamp/tree/main/week_1_basics_n_setup/1_terraform_gcp)
-- Install [Python 3.8 or a later version](https://www.python.org/downloads/)
-- A virtual environment is recommended for the setup. You can create it with [conda](https://docs.conda.io/en/latest/) for example
-- Install Prefect and the dependencies needed for the data pipeline running `pip install -r ./setup/conda_requirements.txt`. Don´t forget to be in the repo directory in the console before running the command.
+
+Reproducing this project has been tested on an Ubuntu 20.04 LTS VM, in both Google Cloud and a Proxmox homelab.  This project will require a similar VM, a Google Cloud account, a project on Google Cloud, and a service account with appropriate permissions for the project.
+
+1) If you need to set up a VM, an account, project, or service account on Google Cloud, see [Setup Readme](https://github.com/EzicStar/BA-turnstiles-pipeline/blob/main/setup/setup_readme.md) for more detailed instructions.
+
+2) On your VM, clone the repo, `git clone https://github.com/EzicStar/BA-turnstiles-pipeline.git`, and then `cd` into the repo folder
+
+3) If you need to install Google Cloud CLI, Anaconda, and Terraform, you can run a bash script with this command, `bash ./setup/setup.sh`, which will perform the following actions:
+
+    * Apply initial updates, and install
+    * Install Google Cloud cli application
+    * Setup Anaconda and Terraform.
+
+    * (Note) This may take a little time to process and if you see any prompts from updates, you can hit OK on the prompts and `f` for the MORE prompt for the Anaconda setup
+
+4) Setup your conda virtual environment with the following commands:
+
+    * `source ~/.bashrc` - (if you just installed Anaconda above, and haven't restarted your shell session)
+    * `conda create -n baturnstiles python=3.9 -y`
+    * `conda activate baturnstiles`
+    * `pip install -r ./setup/requirements.txt`
+
+5) Save your Google Cloud service account .json file to the ./creds folder.  You can sftp the file from your local computer to that location.  You could even just open the file on your local computer, copy the contents of the file and do `nano ./creds/[filename].json` on the VM and paste in the contents into this new blank file, and then do CTRL + X, and then `Y` and ENTER, to save and exit the file.
+
+6) Set an environment variable for your service account file that you just saved with this command: `export GOOGLE_APPLICATION_CREDENTIALS="<absolute path to the json file in the ./creds folder>"`
+
+7) Update the GOOGLE_APPLICATION_CREDENTIALS environment variable in the ./.env file, using the same absolute path to the .json service account file
+
+8) Run `gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS` to authenticate with Google Cloud, with your service account .json file.
+
+9) Run Terraform to deploy your infrastructure to your Google Cloud Project.  Run the following commands:
+
+    * `terraform -chdir="./terraform" init` - to initialize terraform
+    * `terraform -chdir="./terraform" plan -var="project=<project id here>"`, replacing <project id here> with your Google Project ID.  This will build a deployment plan that you can review.
+    * `terraform -chdir="./terraform" apply -var="project=<project id here>"`, replacing <project id here> with your Google Project ID.  This will apply the deployment plan and deploy the infrastructure
