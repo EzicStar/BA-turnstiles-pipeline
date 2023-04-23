@@ -20,5 +20,5 @@ variable "storage_class" {
 variable "BQ_DATASET" {
   description = "BigQuery Dataset that raw data (from GCS) will be written to"
   default = "turnstiles_stg"
-  type = list
+  type = string
 }
