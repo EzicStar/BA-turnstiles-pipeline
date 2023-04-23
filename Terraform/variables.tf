@@ -19,8 +19,6 @@ variable "storage_class" {
 
 variable "BQ_DATASET" {
   description = "BigQuery Dataset that raw data (from GCS) will be written to"
-  # type = string
-  # default = "mpls_311_staging"
+  default = "turnstiles_stg"
   type = list
-  default = ["mpls_311_staging", "mpls_311_development", "mpls_311_production"]
 }
