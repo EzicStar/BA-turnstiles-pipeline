@@ -2,6 +2,7 @@ import pandas as pd
 from prefect import flow, task
 from prefect_gcp.cloud_storage import GcsBucket
 from pathlib import Path
+import os
 
 
 @task(log_prints=True)
@@ -52,6 +53,8 @@ def format_date(df: pd.DataFrame) -> pd.DataFrame:
 @task()
 def write_local(df : pd.DataFrame, dataset_file : str) -> Path:
     """Write DataFrame out locally as parquet file"""
+    if os.path.exists('tempData') is False:
+        os.makedirs('tempData')
     path = Path(f"tempData/{dataset_file}.parquet")
     df.to_parquet(path, compression="gzip")
     return path
@@ -61,7 +64,7 @@ def write_local(df : pd.DataFrame, dataset_file : str) -> Path:
 def write_gcs(path: Path) -> None:
     """Upload local parquet file to GCS"""
     # Remember to create your own gcs bucket prefect block
-    gcs_block = GcsBucket.load("your-gcs-block-name")
+    gcs_block = GcsBucket.load("baturnstiles-gcp-creds")
     gcs_block.upload_from_path(from_path=f"{path}")
 
 
@@ -77,5 +80,12 @@ def turnstiles_web_to_gcs(year: int) -> None:
     path = write_local(df, dataset_file)
     write_gcs(path)
 
+
+@flow()
+def parent_web_to_gcs(years: list[int]) -> None:
+    for year in years:
+        turnstiles_web_to_gcs(year)
+
+
 if __name__ == '__main__':
-    turnstiles_web_to_gcs(2019)
+    parent_web_to_gcs([2018])

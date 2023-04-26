@@ -1,0 +1,17 @@
+-- Create partitioned and clustered table
+CREATE OR REPLACE TABLE turnstiles_stg.turnstiles_stg_part_clust
+PARTITION BY DATE(EndDateTime)
+CLUSTER BY TurnstileID AS
+SELECT * FROM turnstiles_stg.turnstiles_stg;
+
+-- Process comparison between querying normal table vs a partitioned and clustered one
+
+-- This query should process aprox 800mb
+SELECT DISTINCT(TurnstileID)
+FROM turnstiles_stg.turnstiles_stg
+WHERE DATE(EndDateTime) BETWEEN '2019-06-01' AND '2019-06-30';
+
+-- This one only 30mb
+SELECT DISTINCT(TurnstileID)
+FROM turnstiles_stg.turnstiles_stg_part_clust
+WHERE DATE(EndDateTime) BETWEEN '2019-06-01' AND '2019-06-30';

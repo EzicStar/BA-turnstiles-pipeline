@@ -10,7 +10,7 @@ def extract_from_gcs(year: int) -> Path:
     """Download turnstiles data from GCS"""
     gcs_path = f"molinetes-{year}.parquet"
     #Remember to put your prefect gcs block
-    gcs_block = GcsBucket.load('your-gcs-block')
+    gcs_block = GcsBucket.load('baturnstiles-gcp-creds')
     gcs_block.download_object_to_path(from_path=gcs_path, 
     to_path=f'./tempData/molinetes-{year}.parquet')
 
@@ -32,11 +32,10 @@ def transform(path: Path) -> pd.DataFrame:
 @task()
 def write_bq(df: pd.DataFrame) -> None:
     """Write Dataframe to BigQuery"""
-    # Remember to change it to your prefect gcs block
-    gcs_creds_block = GcpCredentials.load('your-gcp-creds')
+    gcs_creds_block = GcpCredentials.load('baturnstiles-gcp-creds')
     df.to_gbq(
         # Remember to change it to your project ID
-        destination_table='turnstiles_data.turnstiles',
+        destination_table='turnstiles_stg.turnstiles_stg',
         project_id='your-project-id',
         credentials=gcs_creds_block.get_credentials_from_service_account(),
         chunksize=500_000,
