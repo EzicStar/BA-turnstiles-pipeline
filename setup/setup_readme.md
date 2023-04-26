@@ -75,7 +75,7 @@ Hit Create.  Once the VM is finished getting created, note the external IP addre
 In your terminal window, you should now be able to ssh into the VM via the command below, inputing the external IP address of your VM
 `ssh -i ~/.ssh/baturnstiles_vm baturnstiles@[external IP address]`
 
-You can also update or create a `config` file in your `~/.ssh` folder with the block below, inputing the external IP address of your VM.  This will allow you to just do `ssh gcpvm` to login to your VM
+You can also update or create a `config` file in your `~/.ssh` folder with the block below, inputing the external IP address of your VM.  This will allow you to just do `ssh gcpvm` to login to your VM. If you shut down the VM, you wil probably need to edit the config file with the new assigned IP.
 ```
 Host gcpvm
     Hostname [external IP address]
