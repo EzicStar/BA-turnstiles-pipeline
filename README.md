@@ -31,6 +31,10 @@ Here is a dashboard made in Google Looker Studio based on the data model transfo
 
 ![Dashboard](https://github.com/EzicStar/BA-turnstiles-pipeline/blob/main/Images/Dashboard.jpg)
 
+And here is made with Microsoft Power BI
+
+![Dashboard](https://github.com/EzicStar/BA-turnstiles-pipeline/blob/main/Images/Dashboard_PowerBI.jpg)
+
 ## Run the Walkthrough Tutorial
 
 Reproducing this project has been tested on an Ubuntu 20.04 LTS VM, in Google Cloud.  This project will require a similar VM, a Google Cloud account, a project on Google Cloud, and a service account with appropriate permissions for the project. Credits to [MikeColemn](https://github.com/mikecolemn) for creating such clear steps for the VM setup!
